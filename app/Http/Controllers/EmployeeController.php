@@ -24,13 +24,12 @@ class EmployeeController extends Controller
 
         //check for empty table
         if (!$employees->isEmpty()) {
-            return view('index', compact('employees'));
+            //continue
         } else {
             $employees = 0;
-            return view('index', compact('employees'));
         }
         
-        
+        return view('index', compact('employees'));
     }
 
     /**
@@ -62,6 +61,7 @@ class EmployeeController extends Controller
             'position' => 'required|max:255',
             'salary' => 'required|regex:/^\d+(\.\d{1,2})?$/'
         ]);
+
         $show = Employee::create($validatedData);
    
         return redirect('/employees')->with('success', 'Успешно запазихте служител!');
