@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
 use Illuminate\Http\Request;
 use App\Models\Employee;
 
@@ -20,7 +21,7 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        $employees = Employee::all();
+        $employees = Employee::all()->where('created_by', Auth::user()->id);
 
         //check for empty table
         if (!$employees->isEmpty()) {
@@ -50,9 +51,9 @@ class EmployeeController extends Controller
      */
     public function store(Request $request)
     {   
-        //4.1 Основни полета: имена, адрес, телефон, отдел, длъжност, заплата и други по избор;
 
-        $validatedData = $request->validate([
+        //4.1 Основни полета: имена, адрес, телефон, отдел, длъжност, заплата и други по избор;
+        $this->validate($request, [
             'name' => 'required|max:255',
             'email' => 'required|email',
             'address' => 'required|max:500',
@@ -62,7 +63,16 @@ class EmployeeController extends Controller
             'salary' => 'required|regex:/^\d+(\.\d{1,2})?$/'
         ]);
 
-        $show = Employee::create($validatedData);
+        $data['created_by'] = Auth::user()->id;
+        $data['name'] = $request['name'];
+        $data['email'] = $request['email'];
+        $data['address'] = $request['address'];
+        $data['phone'] = $request['phone'];
+        $data['department'] = $request['department'];
+        $data['position'] = $request['position'];
+        $data['salary'] = $request['salary'];
+
+        $show = Employee::create($data);
    
         return redirect('/employees')->with('success', 'Успешно запазихте служител!');
     }

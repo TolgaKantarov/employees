@@ -40,9 +40,16 @@
 	        <li class="nav-item">
 	          <a class="nav-link" href="{{ route('employees.create') }}">Добави</a>
 	        </li>
-	         <li class="nav-item">
-	          <a class="nav-link" href="{{ url('/logout') }}">Изход</a>
-	        </li>
+
+		    <li class="nav-item dropdown">
+		        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		          {{ Auth::user()->name }}
+		        </a>
+		        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+		          <a class="dropdown-item" href="{{ url('/logout') }}">Изход</a>
+		        </div>
+		     </li>
+
 	      </ul>
 	    </div>
 
