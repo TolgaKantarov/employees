@@ -97,7 +97,7 @@ class EmployeeController extends Controller
      */
     public function edit($id)
     {
-        $employee = Employee::findOrFail($id);
+        $employee = Employee::where('created_by', Auth::user()->id)->findOrFail($id);
 
         return view('edit', compact('employee'));
     }
