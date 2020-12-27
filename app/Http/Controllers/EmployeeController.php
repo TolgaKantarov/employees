@@ -134,7 +134,7 @@ class EmployeeController extends Controller
      */
     public function destroy($id)
     {
-        $employee = Employee::findOrFail($id);
+        $employee = Employee::where('created_by', Auth::user()->id)->findOrFail($id);
         $employee->delete();
 
         return redirect('/employees')->with('success', 'Успешно изтрихте служител!');
