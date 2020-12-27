@@ -56,6 +56,8 @@
     </tbody>
   </table>
 
+  {{ $employees->links() }}
+
   @else
 
   <div class="bg-light p-5 rounded mt-4">

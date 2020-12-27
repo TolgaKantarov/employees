@@ -21,7 +21,7 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        $employees = Employee::all()->where('created_by', Auth::user()->id);
+        $employees = Employee::where('created_by', Auth::user()->id)->simplePaginate(5);
 
         //check for empty table
         if (!$employees->isEmpty()) {
